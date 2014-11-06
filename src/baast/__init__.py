@@ -2,4 +2,4 @@
 
 
 def includeme(config):
-    pass
+    config.include('.users', route_prefix='users')
