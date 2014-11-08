@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 
 (function (exports){
-    if(!exports.baast){
+    if(exports.baast){
         return;
     }
     exports.baast = {};

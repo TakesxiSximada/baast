@@ -19,17 +19,17 @@ def upgrade():
     op.create_table(
         'User',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('created_at', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
-        sa.Column('updated_at', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
-        sa.Column('deleted_at', sa.TIMESTAMP(), nullable=True),
+        sa.Column('is_created', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
+        sa.Column('is_updated', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
+        sa.Column('is_deleted', sa.TIMESTAMP(), nullable=True),
         sqlite_autoincrement=True,
         )
 
     op.create_table(
         'UserAttribute',
         sa.Column('user_id', sa.Integer, primary_key=True),
-        sa.Column('created_at', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
-        sa.Column('updated_at', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
+        sa.Column('is_created', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
+        sa.Column('is_updated', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
         sa.Column('name', sa.Unicode, default=''),
         sa.Column('email', sa.Unicode, default=''),
         sa.Column('password', sa.Unicode, default=''),

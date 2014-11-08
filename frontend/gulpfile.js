@@ -30,6 +30,17 @@ gulp.task('watch', function (){
     });
 });
 
+gulp.task('threejs', function (){
+    bower_to_lib({'threejs/build/*': 'threejs/build'});
+});
+
+gulp.task('d3', function (){
+    bower_to_lib({'d3/d3.**': 'd3'});
+});
+
+gulp.task('nvd3', function (){
+    bower_to_lib({'nvd3/nv.d3.**': 'nvd3'});
+});
 
 gulp.task('baast', function (){
     bower_to_lib({
@@ -137,17 +148,30 @@ gulp.task('backbone.marionette', function (){
     bower_to_lib({'backbone.marionette/lib/**': 'backbone.marionette/lib'});
 });
 
+gulp.task('backbone.babysitter', function (){
+    bower_to_lib({'backbone.babysitter/lib/**': 'backbone.babysitter/lib'});
+});
+
+gulp.task('backbone.wreqr', function (){
+    bower_to_lib({'backbone.wreqr/lib/**': 'backbone.wreqr/lib'});
+});
+
 gulp.task('backbone.localStorage', function (){
     bower_to_lib({'backbone.localStorage/backbone.localStorage.js': 'backbone.localStorage'});
 });
 
 gulp.task('all', function(){
-    fs.readFile('./bower.json', 'utf8', function (err, text){
-        var data = JSON.parse(text);
-        Object.keys(data.dependencies).forEach(function (name){
-            gulp.run(name);
-        });
+    var names = fs.readdirSync('bower_components');
+    names.forEach(function (name, ii){
+        gulp.run(name);
     });
+
+    // fs.readFile('./bower.json', 'utf8', function (err, text){
+    //     var data = JSON.parse(text);
+    //     Object.keys(data.dependencies).forEach(function (name){
+    //         gulp.run(name);
+    //     });
+    // });
 });
 
 gulp.task('default', function (){
