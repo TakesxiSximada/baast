@@ -29,7 +29,8 @@ class UserAttribute(Base, SmartBase):
     __tablename__ = 'UserAttribute'
 
     user_id = sa.Column(sa.Integer, sa.ForeignKey("User.id"), primary_key=True)
-    user = sa_orm.relationship('User', uselist=False, backref=sa_orm.backref('attribute', uselist=False))
+    user = sa_orm.relationship('User', uselist=False,
+                               backref=sa_orm.backref('attribute', uselist=False))
 
     # must
     name = sa.Column(sa.Unicode, doc=u"", default=u"")

@@ -7,7 +7,6 @@ from azoth.models import (
     PowerBase,
     AUTO_INCREMENT,
     )
-from .adapters import UserAdapter
 
 
 class Organization(Base, PowerBase):
@@ -17,7 +16,6 @@ class Organization(Base, PowerBase):
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.Unicode, doc=u"", default=u"")
     email = sa.Column(sa.Unicode, doc=u"", default=u"")
-
 
     def __eq__(self, other):
         return self.id == other.id
