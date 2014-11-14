@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from sandstorm.handlers import SandstormHandler
+from sandstorm.decorators import validate
 from .managers import UserManager
 
 
@@ -9,23 +10,31 @@ class UserHandler(SandstormHandler):
 
 
 class TestHandler(SandstormHandler):
+    def get_request(self):
+        import webob
+        import webob.request
+        environ = webob.request.environ_from_url(
+            self.request.full_url())
+        return webob.Request(environ)
+
+    @validate('schemas/test.request.json')
     def get(self):
-        self.write('OK')
+        pass
+
+    def post(self):
+        pass
 
 
 class CreateHandler(UserHandler):
-    schemas = {
-        'post': {
-            'name': (str, 1),
-            'email': (str, 1),
-            'password': (str, 1),
-            },
-        }
-
+    @validate('schemas/user.create.request.json')
     def post(self):
-        params = self.parse_params()
+        arguments = self.normalized_arguments
+        name = arguments['name']
+        email = arguments['email']
+        password = arguments['password']
         manager = UserManager()
-        user = manager.create(**params)
+        user = manager.create(
+            name=name, email=email, password=password)
         res = {
             'status': ('o' if user else 'x'),
             }
