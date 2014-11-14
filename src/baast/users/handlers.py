@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
 from sandstorm.handlers import SandstormHandler
-from sandstorm.decorators import validate
+from sandstorm.decorators import (
+    validate,
+    view_config,
+    )
+from pyramid.httpexceptions import HTTPBadRequest
 from .managers import UserManager
+from .errors import AlreadyExistsUserError
 
 
 class UserHandler(SandstormHandler):
@@ -26,6 +31,8 @@ class TestHandler(SandstormHandler):
 
 
 class CreateHandler(UserHandler):
+
+    @view_config()
     @validate('schemas/user.create.request.json')
     def post(self):
         arguments = self.normalized_arguments
@@ -33,12 +40,16 @@ class CreateHandler(UserHandler):
         email = arguments['email']
         password = arguments['password']
         manager = UserManager()
-        user = manager.create(
-            name=name, email=email, password=password)
-        res = {
-            'status': ('o' if user else 'x'),
-            }
-        self.write(json.dumps(res))
+        try:
+            user = manager.create(
+                name=name, email=email, password=password)
+        except AlreadyExistsUserError as err:
+            raise HTTPBadRequest(str(err))
+        else:
+            res = {
+                'status': ('o' if user else 'x'),
+                }
+            self.write(json.dumps(res))
 
 
 class ShowHandler(UserHandler):
