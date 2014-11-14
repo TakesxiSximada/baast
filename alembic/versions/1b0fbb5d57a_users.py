@@ -30,15 +30,15 @@ def upgrade():
         sa.Column('user_id', sa.Integer, primary_key=True),
         sa.Column('is_created', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
         sa.Column('is_updated', sa.TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False),
-        sa.Column('name', sa.Unicode, default=''),
-        sa.Column('email', sa.Unicode, default=''),
-        sa.Column('password', sa.Unicode, default=''),
-        sa.Column('first_name', sa.Unicode, default=''),
-        sa.Column('middle_name', sa.Unicode, default=''),
-        sa.Column('last_name', sa.Unicode, default=''),
-        sa.Column('address', sa.Unicode, default=''),
+        sa.Column('name', sa.Unicode, default=u''),
+        sa.Column('email', sa.Unicode, default=u''),
+        sa.Column('password', sa.Unicode, default=u''),
+        sa.Column('first_name', sa.Unicode, default=u''),
+        sa.Column('middle_name', sa.Unicode, default=u''),
+        sa.Column('last_name', sa.Unicode, default=u''),
+        sa.Column('address', sa.Unicode, default=u''),
         sa.Column('birth_date', sa.DateTime, nullable=True),
-        sa.Column('contact', sa.Unicode, default=''),
+        sa.Column('contact', sa.Unicode, default=u''),
         )
 
 
