@@ -21,11 +21,12 @@ class Organization(Base, PowerBase):
         return self.id == other.id
 
 
-class rganizationAttribute(Base, SmartBase):
-    __tablename__ = 'UserAttribute'
+class OrganizationAttribute(Base, SmartBase):
+    __tablename__ = 'OrganizationAttribute'
 
-    user_id = sa.Column(sa.Integer, sa.ForeignKey("User.id"), primary_key=True)
-    user = sa_orm.relationship('User', uselist=False, backref=sa_orm.backref('attribute', uselist=False))
+    user_id = sa.Column(sa.Integer, sa.ForeignKey("Organization.id"), primary_key=True)
+    user = sa_orm.relationship('User', uselist=False,
+                               backref=sa_orm.backref('attribute', uselist=False))
 
     name = sa.Column(sa.Unicode, doc=u"", default=u"")
     email = sa.Column(sa.Unicode, doc=u"", default=u"")
