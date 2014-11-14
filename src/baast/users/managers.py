@@ -8,15 +8,15 @@ from .errors import AlreadyExistsUserError
 
 
 class UserManager(object):
-    def create(self, **kwds):
+    def create(self, name=None, email=None, password=None, *args, **kwds):
         user = User()
         user.save()
         attribute = UserAttribute()
         attribute.user_id = user.id
 
         try:
-            attribute.name = kwds['name']
-            attribute.email = kwds['email']
+            attribute.name = name
+            attribute.email = email
 
             # check multiple user
             already_users = User\
@@ -29,9 +29,10 @@ class UserManager(object):
                 .all()
 
             if already_users:
-                raise AlreadyExistsUserError()
+                raise AlreadyExistsUserError(
+                    'name={}, email={}'.format(name, email))
 
-            attribute.password = kwds['password']
+            attribute.password = password
             attribute.save()
         except KeyError:
             raise
