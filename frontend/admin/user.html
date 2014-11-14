@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <script src="/lib/jquery/jquery.js"></script>
+
+    <link href="/lib/pnotify/pnotify.core.css" rel="stylesheet" />
+    <link href="/lib/pnotify/pnotify.buttons.css" rel="stylesheet" />
+    <link href="/lib/pnotify/pnotify.history.css" rel="stylesheet" />
+    <link href="/lib/pnotify/pnotify.picon.css" rel="stylesheet" />
+    <script src="/lib/pnotify/pnotify.core.js"></script>
+    <script src="/lib/pnotify/pnotify.buttons.js"></script>
+    <script src="/lib/pnotify/pnotify.desktop.js"></script>
+    <script src="/lib/pnotify/pnotify.callbacks.js"></script>
+    <script src="/lib/pnotify/pnotify.history.js"></script>
+    <script src="/lib/pnotify/pnotify.confirm.js"></script>
+    <script src="/lib/pnotify/pnotify.nonblock.js"></script>
+    <script src="/lib/pnotify/pnotify.reference.js"></script>
+
+    <link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="/lib/vue/dist/vue.js"></script>
+    <script src="users.js"></script>
+  </head>
+  <body>
+    <div id="user-creator">
+      <form>
+        <input type="text" name="name" value=""/>
+        <input type="text" name="email" value=""/>
+        <input type="password" name="password" value=""/>
+      </form>
+      <a v-on="click: register" class="btn btn-primary">登録</a>
+    </div>
+    <script>
+      (function (){
+      var user_creator = baast.users.UserCreator("#user-creator");
+      })();
+    </script>
+  </body>
+</html>
