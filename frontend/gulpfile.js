@@ -30,6 +30,10 @@ gulp.task('watch', function (){
     });
 });
 
+gulp.task('pnotify', function (){
+    bower_to_lib({'pnotify/pnotify.*': 'pnotify/'});
+});
+
 gulp.task('threejs', function (){
     bower_to_lib({'threejs/build/*': 'threejs/build'});
 });

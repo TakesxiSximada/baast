@@ -24,6 +24,7 @@
     "vue": "~0.11.0",
     "threejs": "*",
     "nvd3": "~1.1.15-beta",
-    "fontello": "~5.2.0"
+    "fontello": "~5.2.0",
+    "pnotify": "~2.0.1"
   }
 }
