@@ -8,6 +8,10 @@ from .errors import AlreadyExistsUserError
 
 
 class UserManager(object):
+
+    def collection(self):
+        return User.query().all()
+
     def create(self, name=None, email=None, password=None, *args, **kwds):
         user = User()
         user.save()

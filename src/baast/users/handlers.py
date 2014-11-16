@@ -22,9 +22,8 @@ class TestHandler(SandstormHandler):
             self.request.full_url())
         return webob.Request(environ)
 
-    @validate('schemas/test.request.json')
     def get(self):
-        pass
+        self.write('OK')
 
     def post(self):
         pass
@@ -51,6 +50,16 @@ class CreateHandler(UserHandler):
                 }
             self.write(json.dumps(res))
 
+class CollectionHandler(UserHandler):
+    def get(self):
+        manager = UserManager()
+        users = manager.collection()
+        data = [{'id': user.id,
+                 'name': user.attribute.name,
+                 'email': user.attribute.email,
+                 } for user in users]
+        res = json.dumps(data)
+        self.write(res)
 
 class ShowHandler(UserHandler):
     schemas = {
