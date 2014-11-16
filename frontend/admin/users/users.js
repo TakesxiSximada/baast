@@ -30,8 +30,119 @@
     });
 
     var users = {
+        UserManager: function(selector){
+            var db = {
+                'mode': '',
+                'users': [],
+                'new_user': {
+                    'name': '',
+                    'email': '',
+                    'password': '',
+                    'password_confirm': ''
+                },
+                'current_user': {
+                    'id': '',
+                    'name': '',
+                    'email': ''
+                }
+            };
+            var app = new Vue({
+                el: selector,
+                data: db,
+                created: function (){
+                    this.init_new_user_entry();
+                    this.fetch_users();
+                },
+                methods: {
+                    view_default: function (){
+                        this.mode = '';
+                        this.fetch_users();
+                    },
+                    view_new: function(){
+                        this.mode = 'new';
+                    },
+                    view_show: function(userId){
+                        this.mode = 'show';
+                        this.fetch_current_user(userId);
+                        if (!this.current_user.id){
+                            notification('error', 'ユーザがいません', '');
+                        }
+                    },
+                    view_delete: function(){
+                        this.mode = 'delete';
+                    },
+                    fetch_current_user: function(userId){
+                        if (this.current_user.id != userId){
+                            this.init_current_user_entry();
+                        }
+                        if (this.current_user.id == ''){
+                            var target_users = this.users.filter(function (user){
+                                return user.id == userId;
+                            });
+                            if(target_users.length > 0){
+                                this.current_user.id = target_users[0].id;
+                                this.current_user.name = target_users[0].name;
+                                this.current_user.email = target_users[0].email;
+                            }
+                        }
+
+                    },
+                    init_current_user_entry: function(){
+                        this.current_user.id  = '';
+                        this.current_user.name  = '';
+                        this.current_user.email = '';
+                    },
+                    init_new_user_entry: function(){
+                        this.new_user.name  = '';
+                        this.new_user.email = '';
+                        this.new_user.password = '';
+                        this.new_user.password_confirm = '';
+                    },
+                    delete_user: function(){
+                        console.log("OK");
+                    },
+                    update_user: function(){
+                        console.log("OK");
+                    },
+                    register_user: function (){
+                        var user = this.new_user;
+                        $.ajax({
+                            'url': '/api/users/new',
+                            'method': 'POST',
+                            'data': user,
+                            'success': function (res, status, xhr){
+                                notification('success', 'ユーザを作成しました', '');;
+                            },
+                            'error': function (res, status, xhr){
+                                notification('error', 'ユーザを作成できませんでした', res.statusText);
+                            }
+                        });
+
+                    },
+                    fetch_users: function(){
+                        var users = this.users;
+                        $.ajax({
+                            'url': '/api/users',
+                            'method': 'GET',
+                            'dataType': 'json',
+                            'success': function (res, status, xhr){
+                                users.length = 0;
+                                $.each(res, function(ii, user){
+                                    users.push(user);
+                                });
+                            },
+                            'error': function (res, status, xhr){
+                                notification('error', 'ユーザを取得できませんでした', res.statusText);
+                            }
+                        });
+                    }
+                }
+            });
+            return app;
+        },
         UserCollector: function (selector){
             var db = {
+                'aabbcc': 1,
                 'users': [],
                 'count': 0
             }
@@ -45,6 +156,9 @@
                     this.update(db.users);
                 },
                 methods: {
+                    aaa: function (){
+                        this.aabbcc = 'test';
+                    },
                     update: function(users){
                         $.ajax({
                             'url': '/api/users',
