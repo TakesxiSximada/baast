@@ -30,6 +30,10 @@ gulp.task('watch', function (){
     });
 });
 
+gulp.task('director', function (){
+    bower_to_lib({'director/build/*': 'director/build/'});
+});
+
 gulp.task('pnotify', function (){
     bower_to_lib({'pnotify/pnotify.*': 'pnotify/'});
 });
