@@ -103,19 +103,12 @@ class ShowHandler(UserHandler):
 
 
 class UpdateHandler(UserHandler):
-    schemas = {
-        'post': {
-            'user_id': (int, 1),
-            'name': (str, 1),
-            'email': (str, 1),
-            'password': (str, 1),
-            },
-        }
-
+    @view_config()
+    @validate('schemas/user.update.request.json')
     def post(self):
-        params = self.parse_params()
+        arguments = self.normalized_arguments
         manager = UserManager()
-        user = manager.update(**params)
+        user = manager.update(**arguments)
         status = 'o' if user else 'x'
         res = {
             'status': status

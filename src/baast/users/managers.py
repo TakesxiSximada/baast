@@ -46,7 +46,7 @@ class UserManager(object):
         return user
 
     def update(self, **kwds):
-        user_id = kwds['user_id']
+        user_id = kwds['id']
         users = self.get(user_ids=[user_id])
         if len(users) == 1:
             user = users[0]

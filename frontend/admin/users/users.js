@@ -106,8 +106,19 @@
                     delete_user: function(){
                         console.log("OK");
                     },
-                    update_user: function(userId){
-                        console.log('OK');
+                    update_user: function(){
+                        var user = this.current_user;
+                        $.ajax({
+                            'url': '/api/users/update',
+                            'method': 'POST',
+                            'data': user,
+                            'success': function (res, status, xhr){
+                                notification('success', 'ユーザ情報を更新しました', '');;
+                            },
+                            'error': function (res, status, xhr){
+                                notification('error', 'ユーザ情報を更新できませんでした', res.statusText);
+                            }
+                        });
                     },
                     register_user: function (){
                         var user = this.new_user;
