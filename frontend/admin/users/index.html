@@ -20,6 +20,7 @@
     <link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <script src="/lib/bootstrap/js/bootstrap.js"></script>
     <script src="/lib/vue/dist/vue.js"></script>
+    <script src="/lib/director/build/director.js"></script>
     <script src="/admin/users/users.js"></script>
   </head>
 
@@ -70,9 +71,18 @@
       </div>
     </div>
 
+    <a href="#/a">a</a>
+    <a href="#/b">b</a>
+    <a href="#/c">c</a>
     <script>
       (function (){
       var user_collector = baast.users.UserCollector("#user-collector");
+      var router = new Router({
+          "": function (){console.log("normal")},
+          "/a": function (){console.log("a")},
+          "/b": function (){console.log("b")},
+          "/c": function (){console.log("c")},
+      }).init();
       })();
     </script>
   </body>
