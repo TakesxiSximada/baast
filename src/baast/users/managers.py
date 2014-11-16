@@ -59,11 +59,13 @@ class UserManager(object):
         else:
             raise ValueError('illigal user')
 
-    def get(self, user_ids):
-        return User\
-            .query()\
-            .filter(User.id.in_(user_ids))\
-            .all()
+    def get(self, user_ids=None):
+        qs = User\
+            .query()
+        if user_ids:
+            user_ids = list(map(int, user_ids))
+            qs = qs.filter(User.id.in_(user_ids))
+        return qs.all()
 
     def delete(self, users_or_user_ids, force=False):
         users = []

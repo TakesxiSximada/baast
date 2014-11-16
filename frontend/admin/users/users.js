@@ -79,13 +79,18 @@
                             var target_users = this.users.filter(function (user){
                                 return user.id == userId;
                             });
+                            if(target_users.length == 0){
+                                this.fetch_users([userId]);
+                            }
+                            var target_users = this.users.filter(function (user){
+                                return user.id == userId;
+                            });
                             if(target_users.length > 0){
                                 this.current_user.id = target_users[0].id;
                                 this.current_user.name = target_users[0].name;
                                 this.current_user.email = target_users[0].email;
                             }
                         }
-
                     },
                     init_current_user_entry: function(){
                         this.current_user.id  = '';
@@ -101,8 +106,8 @@
                     delete_user: function(){
                         console.log("OK");
                     },
-                    update_user: function(){
-                        console.log("OK");
+                    update_user: function(userId){
+                        console.log('OK');
                     },
                     register_user: function (){
                         var user = this.new_user;
@@ -119,11 +124,16 @@
                         });
 
                     },
-                    fetch_users: function(){
+                    fetch_users: function(userIds){
+                        if (!userIds){
+                            userIds = [];
+                        }
                         var users = this.users;
                         $.ajax({
                             'url': '/api/users',
                             'method': 'GET',
+                            'data': {'userIds': userIds},
+                            'type': 'json',
                             'dataType': 'json',
                             'success': function (res, status, xhr){
                                 users.length = 0;
