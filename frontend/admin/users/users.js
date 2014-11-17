@@ -28,7 +28,6 @@
             }
         });
     });
-
     var users = {
         UserManager: function(selector){
             var db = {
@@ -76,10 +75,12 @@
                             this.init_current_user_entry();
                         }
                         if (this.current_user.id == ''){
+                            var users = this.users;
                             var target_users = [];
                             $.each(this.users, function (ii, user){
                                 if(user.id == userId){
-                                    target_users.push(user);
+                                    var index = users.indexOf(user);
+                                    users.$remove(index);
                                 }
                             });
                             if(target_users.length == 0){
@@ -164,6 +165,7 @@
                         }
                         var users = this.users;
                         var req = {userIds: userIds};
+                        var id_user = {};
                         $.ajax({
                             'url': '/api/users',
                             'type': 'GET',
