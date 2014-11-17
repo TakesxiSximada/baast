@@ -104,13 +104,30 @@
                         this.new_user.password_confirm = '';
                     },
                     delete_user: function(){
-                        console.log("OK");
+                        var req = {
+                            'userId': this.current_user.id
+                        };
+                        console.log(req);
+                        $.ajax({
+                            'url': '/api/users/delete',
+                            'type': 'POST',
+                            'dataType': 'json',
+                            'data': req,
+                            'success': function (res, status, xhr){
+                                notification('success', 'ユーザを削除しました', '');;
+                            },
+                            'error': function (res, status, xhr){
+                                notification('error', 'ユーザを削除できませんでした', res.statusText);
+                            }
+                        });
                     },
                     update_user: function(){
                         var user = this.current_user;
                         $.ajax({
                             'url': '/api/users/update',
                             'method': 'POST',
+                            'type': 'json',
+                            'dataType': 'json',
                             'data': user,
                             'success': function (res, status, xhr){
                                 notification('success', 'ユーザ情報を更新しました', '');;
@@ -124,7 +141,7 @@
                         var user = this.new_user;
                         $.ajax({
                             'url': '/api/users/new',
-                            'method': 'POST',
+                            'type': 'POST',
                             'data': user,
                             'success': function (res, status, xhr){
                                 notification('success', 'ユーザを作成しました', '');;
@@ -160,84 +177,85 @@
                 }
             });
             return app;
-        },
-        UserCollector: function (selector){
-            var db = {
-                'aabbcc': 1,
-                'users': [],
-                'count': 0
-            }
-            var app = new Vue({
-                el: selector,
-                data: db,
-                created: function(){
-                    this.$watch('users', function (){
-                        this.count = this.users.length;
-                    });
-                    this.update(db.users);
-                },
-                methods: {
-                    aaa: function (){
-                        this.aabbcc = 'test';
-                    },
-                    update: function(users){
-                        $.ajax({
-                            'url': '/api/users',
-                            'method': 'GET',
-                            'dataType': 'json',
-                            'beforeSending': function (xhr, settings){
-                                console.log('getting user collection...');
-                            },
-                            'complete': function (xhr, status){
-                                console.log(xhr);
-                            },
-                            'success': function (res, status, xhr){
-                                $.each(res, function(ii, user){
-                                    users.push(user);
-                                });
-                            },
-                            'error': function (res, status, xhr){
-                                notification('error', 'ユーザを取得できませんでした', res.statusText);
-                            }
-                        });
-                    }
-                }
-            });
-            return app;
-        },
-        UserCreator: function (selector){
-            var app = new Vue({
-                el: selector,
-                created: function (){
-                },
-                methods: {
-                    register: function (evnet){
-                        var form = $($(this.$el).find('form'));
-                        $.ajax({
-                            'url': '/api/users/new',
-                            'method': 'POST',
-                            'data': form.serialize(),
-                            'beforeSending': function (xhr, settings){
-                                console.log('register user...');
-                            },
-                            'complete': function (xhr, status){
-                                console.log(xhr);
-                            },
-                            'success': function (res, status, xhr){
-                                notification('success', 'ユーザを作成しました', '');
-                                setTimeout(function (){
-                                    location.href='/admin/users';
-                                }, 3000, true);
-                            },
-                            'error': function (res, status, xhr){
-                                notification('error', 'ユーザを作成できませんでした', res.statusText);
-                            }
-                        });
-                    }
-                }
-            });
-            return  app;
         }
+        // ,
+        // UserCollector: function (selector){
+        //     var db = {
+        //         'aabbcc': 1,
+        //         'users': [],
+        //         'count': 0
+        //     }
+        //     var app = new Vue({
+        //         el: selector,
+        //         data: db,
+        //         created: function(){
+        //             this.$watch('users', function (){
+        //                 this.count = this.users.length;
+        //             });
+        //             this.update(db.users);
+        //         },
+        //         methods: {
+        //             aaa: function (){
+        //                 this.aabbcc = 'test';
+        //             },
+        //             update: function(users){
+        //                 $.ajax({
+        //                     'url': '/api/users',
+        //                     'method': 'GET',
+        //                     'dataType': 'json',
+        //                     'beforeSending': function (xhr, settings){
+        //                         console.log('getting user collection...');
+        //                     },
+        //                     'complete': function (xhr, status){
+        //                         console.log(xhr);
+        //                     },
+        //                     'success': function (res, status, xhr){
+        //                         $.each(res, function(ii, user){
+        //                             users.push(user);
+        //                         });
+        //                     },
+        //                     'error': function (res, status, xhr){
+        //                         notification('error', 'ユーザを取得できませんでした', res.statusText);
+        //                     }
+        //                 });
+        //             }
+        //         }
+        //     });
+        //     return app;
+        // },
+        // UserCreator: function (selector){
+        //     var app = new Vue({
+        //         el: selector,
+        //         created: function (){
+        //         },
+        //         methods: {
+        //             register: function (evnet){
+        //                 var form = $($(this.$el).find('form'));
+        //                 $.ajax({
+        //                     'url': '/api/users/new',
+        //                     'method': 'POST',
+        //                     'data': form.serialize(),
+        //                     'beforeSending': function (xhr, settings){
+        //                         console.log('register user...');
+        //                     },
+        //                     'complete': function (xhr, status){
+        //                         console.log(xhr);
+        //                     },
+        //                     'success': function (res, status, xhr){
+        //                         notification('success', 'ユーザを作成しました', '');
+        //                         setTimeout(function (){
+        //                             location.href='/admin/users';
+        //                         }, 3000, true);
+        //                     },
+        //                     'error': function (res, status, xhr){
+        //                         notification('error', 'ユーザを作成できませんでした', res.statusText);
+        //                     }
+        //                 });
+        //             }
+        //         }
+        //     });
+        //     return  app;
+        // }
     };
     exports.baast.users = users;
 })(this);

@@ -117,16 +117,16 @@ class UpdateHandler(UserHandler):
 
 
 class DeleteHandler(UserHandler):
-    schemas = {
-        'post': {
-            'user_ids': (int, None)
-            },
-        }
-
+    @view_config()
+    @validate('schemas/user.delete.request.json')
     def post(self):
-        params = self.parse_params()
-        user_ids = params['user_ids']
-
+        print(self.request.arguments)
+        arguments = self.normalized_arguments
+        user_ids = [arguments['userId']]
+        try:
+            user_ids = list(map(int, user_ids))
+        except (ValueError, TypeError) as err:
+            raise HTTPBadRequest(err)
         manager = UserManager()
         delete_users = manager.delete(user_ids)
         delete_user_id_user = dict([user.id, user] for user in delete_users)
