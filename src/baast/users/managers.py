@@ -53,7 +53,7 @@ class UserManager(object):
             attribute = user.attribute
             attribute.name = kwds['name']
             attribute.email = kwds['email']
-            attribute.password = kwds['password']
+            attribute.password = kwds.get('password', attribute.password)
             attribute.save()
             return user
         else:
