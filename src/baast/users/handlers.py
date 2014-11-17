@@ -50,13 +50,14 @@ class CreateHandler(UserHandler):
                 }
             self.write(json.dumps(res))
 
+
 class CollectionHandler(UserHandler):
     @view_config()
     @validate('schemas/user.get.request.json')
     def get(self):
         arguments = self.normalized_arguments
         try:
-            user_ids = arguments['userIds']
+            user_ids = arguments['userIds[]']
         except KeyError:
             user_ids = []
         manager = UserManager()

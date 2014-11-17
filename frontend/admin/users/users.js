@@ -157,12 +157,16 @@
                             userIds = [];
                         }
                         var users = this.users;
+                        var req = {userIds: userIds};
+                        console.log(JSON.stringify(req));
+                        // var req = [{userIds: userIds}];
+                        // console.log(JSON.stringify(req));
                         $.ajax({
                             'url': '/api/users',
-                            'method': 'GET',
-                            'data': {'userIds': userIds},
-                            'type': 'json',
+                            'type': 'GET',
+                            'data': req,
                             'dataType': 'json',
+                            'contentType': 'application/json',
                             'success': function (res, status, xhr){
                                 users.length = 0;
                                 $.each(res, function(ii, user){
