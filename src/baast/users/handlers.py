@@ -57,9 +57,11 @@ class CollectionHandler(UserHandler):
     def get(self):
         arguments = self.normalized_arguments
         try:
-            user_ids = arguments['userIds[]']
+            user_ids = list(map(int, arguments['userIds']))
         except KeyError:
             user_ids = []
+        except (ValueError, TypeError) as err:
+            raise HTTPBadRequest(err)
         manager = UserManager()
         users = manager.get(user_ids)
         data = [{'id': user.id,

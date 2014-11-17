@@ -76,19 +76,26 @@
                             this.init_current_user_entry();
                         }
                         if (this.current_user.id == ''){
-                            var target_users = this.users.filter(function (user){
-                                return user.id == userId;
+                            var target_users = [];
+                            $.each(this.users, function (ii, user){
+                                if(user.id == userId){
+                                    target_users.push(user);
+                                }
                             });
                             if(target_users.length == 0){
                                 this.fetch_users([userId]);
                             }
-                            var target_users = this.users.filter(function (user){
-                                return user.id == userId;
+                            $.each(this.users, function (ii, user){
+                                if(user.id == userId){
+                                    target_users.push(user);
+                                }
                             });
                             if(target_users.length > 0){
                                 this.current_user.id = target_users[0].id;
                                 this.current_user.name = target_users[0].name;
                                 this.current_user.email = target_users[0].email;
+                            }else{
+                                console.log("no user");
                             }
                         }
                     },
@@ -107,7 +114,6 @@
                         var req = {
                             'userId': this.current_user.id
                         };
-                        console.log(req);
                         $.ajax({
                             'url': '/api/users/delete',
                             'type': 'POST',
@@ -158,9 +164,6 @@
                         }
                         var users = this.users;
                         var req = {userIds: userIds};
-                        console.log(JSON.stringify(req));
-                        // var req = [{userIds: userIds}];
-                        // console.log(JSON.stringify(req));
                         $.ajax({
                             'url': '/api/users',
                             'type': 'GET',
@@ -168,7 +171,6 @@
                             'dataType': 'json',
                             'contentType': 'application/json',
                             'success': function (res, status, xhr){
-                                users.length = 0;
                                 $.each(res, function(ii, user){
                                     users.push(user);
                                 });
