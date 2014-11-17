@@ -29,15 +29,12 @@
       <header>
         <h1>Baast 管理画面</h1>
       </header>
+      <div>
+        <a href="#" class="btn btn-primary">一覧</a>
+        <a href="#new" class="btn btn-primary">作成</a>
+      </div>
 
       <div id="baast-user-manager">
-        <div>
-          <a href="#">list</a>
-          <a href="#new">new</a>
-          <a href="#show">show</a>
-          <a href="#delete">delete</a>
-        </div>
-
         <template v-if="mode==''">
           <section>
             <h2>ユーザ一覧</h2>
