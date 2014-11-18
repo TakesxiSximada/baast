@@ -28,7 +28,6 @@
             }
         });
     });
-
     var users = {
         UserManager: function(selector){
             var db = {
