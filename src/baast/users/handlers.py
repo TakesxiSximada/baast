@@ -15,18 +15,11 @@ class UserHandler(SandstormHandler):
 
 
 class TestHandler(SandstormHandler):
-    def get_request(self):
-        import webob
-        import webob.request
-        environ = webob.request.environ_from_url(
-            self.request.full_url())
-        return webob.Request(environ)
-
     def get(self):
         self.write('OK')
 
     def post(self):
-        pass
+        self.write('OK')
 
 
 class CreateHandler(UserHandler):
