@@ -9,7 +9,6 @@
     }
 
     var notification = (function(type, title, message){
-        console.log(title+ ': ' + message);
         var notify = new PNotify({
             title: title,
             text: message,
