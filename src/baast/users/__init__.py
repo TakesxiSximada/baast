@@ -4,7 +4,6 @@ from .handlers import (
     TestHandler,
     CollectionHandler,
     CreateHandler,
-    ShowHandler,
     UpdateHandler,
     DeleteHandler,
     )

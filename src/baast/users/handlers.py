@@ -71,6 +71,7 @@ class CollectionHandler(UserHandler):
         res = json.dumps(data)
         self.write(res)
 
+
 class ShowHandler(UserHandler):
     schemas = {
         'get': {
