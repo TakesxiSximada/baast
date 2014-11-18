@@ -27,7 +27,7 @@
   <body>
     <section>
       <header>
-        <h1></h1>
+        <h1>Baast</h1>
       </header>
       <div>
         <a href="#" class="btn btn-primary">一覧</a>
@@ -37,7 +37,7 @@
       <div id="baast-user-manager">
         <template v-if="mode==''">
           <section>
-            <h2></h2>
+            <h2>一覧</h2>
             <div class="container-fluid">
               <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-condensed">
@@ -66,7 +66,7 @@
 
         <template v-if="mode=='new'">
           <section style="margin: 1em;">
-            <h2></h2>
+            <h2>作成</h2>
             <form>
               <div class="form-group">
                 <label class="control-label">名前:</label>
@@ -94,7 +94,7 @@
 
         <template v-if="mode=='show'">
           <section>
-            <h2></h2>
+            <h2>情報</h2>
             <form>
               <div class="form-group">
                 <label class="control-label">ID:</label>
