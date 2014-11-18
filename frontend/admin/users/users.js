@@ -9,6 +9,7 @@
     }
 
     var notification = (function(type, title, message){
+        console.log(title+ ': ' + message);
         var notify = new PNotify({
             title: title,
             text: message,
@@ -35,22 +36,25 @@
             var db = {
                 'mode': '',
                 'users': [],
+                'current_user_id': 0,
+                'current_user': {
+                    'id': '',
+                    'name': '',
+                    'email': ''
+                },
                 'new_user': {
                     'name': '',
                     'email': '',
                     'password': '',
                     'password_confirm': ''
-                },
-                'current_user': {
-                    'id': '',
-                    'name': '',
-                    'email': ''
                 }
             };
             var app = new Vue({
                 el: selector,
                 data: db,
                 created: function (){
+                    this.$watch('current_user_id', this.fetch_current_user);
+                    this.$watch('users', this.fetch_current_user, deep=true);
                     this.init_new_user_entry();
                     this.fetch_users();
                 },
@@ -64,34 +68,24 @@
                     },
                     view_show: function(userId){
                         this.mode = 'show';
-                        this.fetch_current_user(userId);
-                        if (!this.current_user.id){
-                            notification('error', 'ユーザがいません', '');
-                        }
+                        this.current_user_id = userId;
                     },
                     view_delete: function(){
                         this.mode = 'delete';
                     },
-                    fetch_current_user: function(userId){
-                        if (this.current_user.id != userId){
-                            this.init_current_user_entry();
-                        }
-                        if (this.current_user.id == ''){
-                            this.fetch_users([userId]);
-                            $.each(this.users, function (ii, user){
-                                if(user.id == userId){
-                                    target_users.push(user);
+                    fetch_current_user: function(){
+                        var current_user = this.current_user;
+                        var current_user_id = this.current_user_id;
+                        if (this.current_user.id != this.current_user_id){
+                            $.each(this.users, function(ii, user){
+                                if(user.id == current_user_id){
+                                    current_user.id = user.id;
+                                    current_user.name = user.name;
+                                    current_user.email = user.email;
                                 }
                             });
-                            if(this.current_user.id != userId){
-                                notification('success', 'ユーザがいません', '');
-                            }
                         }
-                    },
-                    init_current_user_entry: function(){
-                        this.current_user.id  = '';
-                        this.current_user.name  = '';
-                        this.current_user.email = '';
+
                     },
                     init_new_user_entry: function(){
                         this.new_user.name  = '';
