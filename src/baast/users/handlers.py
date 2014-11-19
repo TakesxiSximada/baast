@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 from sandstorm.handlers import SandstormHandler
-from sandstorm.decorators import (
-    validate,
-    view_config,
-    )
 from pyramid.httpexceptions import HTTPBadRequest
 from .managers import UserManager
 from .errors import AlreadyExistsUserError
+from .middlewares import view_config
 
 
 class UserHandler(SandstormHandler):
@@ -24,8 +21,7 @@ class TestHandler(SandstormHandler):
 
 class CreateHandler(UserHandler):
 
-    @view_config()
-    @validate('schemas/user.create.request.json')
+    @view_config(schema='schemas/user.create.request.json')
     def post(self):
         arguments = self.normalized_arguments
         name = arguments['name']
@@ -45,8 +41,7 @@ class CreateHandler(UserHandler):
 
 
 class CollectionHandler(UserHandler):
-    @view_config()
-    @validate('schemas/user.get.request.json')
+    @view_config(schema='schemas/user.get.request.json')
     def get(self):
         arguments = self.normalized_arguments
         try:
@@ -75,8 +70,7 @@ class ShowHandler(UserHandler):
             },
         }
 
-    @view_config()
-    @validate('schemas/user.get.request.json')
+    @view_config(schema='schemas/user.get.request.json')
     def get(self):
         arguments = self.normalized_arguments
         user_ids = arguments.userIds
@@ -100,8 +94,7 @@ class ShowHandler(UserHandler):
 
 
 class UpdateHandler(UserHandler):
-    @view_config()
-    @validate('schemas/user.update.request.json')
+    @view_config(schema='schemas/user.update.request.json')
     def post(self):
         arguments = self.normalized_arguments
         manager = UserManager()
@@ -114,8 +107,8 @@ class UpdateHandler(UserHandler):
 
 
 class DeleteHandler(UserHandler):
-    @view_config()
-    @validate('schemas/user.delete.request.json')
+
+    @view_config(schema='schemas/user.delete.request.json')
     def post(self):
         print(self.request.arguments)
         arguments = self.normalized_arguments
