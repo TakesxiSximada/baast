@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+        "first": {
+            "type": "number"
+        },
+        "second": {
+            "type": "integer"
+        },
+        "third": {
+            "type": "integer"
+        }
+    }
+}
