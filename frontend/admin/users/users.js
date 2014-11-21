@@ -58,9 +58,11 @@
                     this.fetch_users();
                 },
                 methods: {
-                    view_default: function (){
+                    view_default: function (update){
                         this.mode = '';
-                        this.fetch_users();
+                        if(update){
+                            this.fetch_users();
+                        }
                     },
                     view_new: function(){
                         this.mode = 'new';
@@ -127,12 +129,14 @@
                     },
                     register_user: function (){
                         var user = this.new_user;
+                        var redirct = this.view_default;
                         $.ajax({
                             'url': '/api/users/new',
                             'type': 'POST',
                             'data': user,
                             'success': function (res, status, xhr){
-                                notification('success', 'ユーザを作成しました', '');;
+                                notification('success', 'ユーザを作成しました', '');
+                                redirct();
                             },
                             'error': function (res, status, xhr){
                                 notification('error', 'ユーザを作成できませんでした', res.statusText);
