@@ -41,6 +41,7 @@
                     'name': '',
                     'email': ''
                 },
+                'new_user_creating': false,
                 'new_user': {
                     'name': '',
                     'email': '',
@@ -86,7 +87,6 @@
                                 }
                             });
                         }
-
                     },
                     init_new_user_entry: function(){
                         this.new_user.name  = '';
@@ -127,13 +127,19 @@
                             }
                         });
                     },
-                    register_user: function (){
+                    register_user: function (continiouse){
+                        this.new_user_creating = true;
                         var user = this.new_user;
-                        var redirct = this.view_default;
+                        var redirct = continiouse ? this.view_new : this.view_default;
+                        var init_new_user_entry = this.init_new_user_entry;
                         $.ajax({
                             'url': '/api/users/new',
                             'type': 'POST',
                             'data': user,
+                            'complete': function (){
+                                init_new_user_entry();
+                                this.new_user_creating = false;
+                            },
                             'success': function (res, status, xhr){
                                 notification('success', 'ユーザを作成しました', '');
                                 redirct();
