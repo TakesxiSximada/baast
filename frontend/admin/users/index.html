@@ -70,19 +70,19 @@
             <form>
               <div class="form-group">
                 <label class="control-label">名前:</label>
-                <input class="form-control" type="text" v-model="new_user.name"/>
+                <input class="form-control lock-user-update" type="text" v-model="new_user.name" />
               </div>
               <div class="form-group">
                 <label class="control-label">Email:</label>
-                <input class="form-control" type="text" v-model="new_user.email"/>
+                <input class="form-control lock-user-update" type="text" v-model="new_user.email"/>
               </div>
               <div class="form-group">
                 <label class="control-label">パスワード:</label>
-                <input class="form-control" type="password" v-model="new_user.password"/>
+                <input class="form-control lock-user-update" type="password" v-model="new_user.password"/>
               </div>
               <div class="form-group">
                 <label class="control-label">パスワード (確認用):</label>
-                <input class="form-control" type="password" v-model="new_user.password_confirm"/>
+                <input class="form-control lock-user-update" type="password" v-model="new_user.password_confirm"/>
                 <template v-if="new_user.password != new_user.password_confirm">
                   パスワードが一致しません
                 </template>
@@ -103,11 +103,11 @@
               </div>
               <div class="form-group">
                 <label class="control-label">名前:</label>
-                <input class="form-control" type="text" v-model="current_user.name"/>
+                <input class="form-control -update" type="text" v-model="current_user.name"/>
               </div>
               <div class="form-group">
                 <label class="control-label">Email:</label>
-                <input class="form-control" type="text" v-model="current_user.email"/>
+                <input class="form-control lock-user-update" type="text" v-model="current_user.email"/>
               </div>
             </form>
             <a v-on="click: update_user" class="btn btn-primary">更新</a>
