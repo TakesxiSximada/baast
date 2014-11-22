@@ -43,6 +43,10 @@ class CreateHandler(UserHandler):
 class CollectionHandler(UserHandler):
     @view_config(schema='schemas/user.get.request.json')
     def get(self):
+        # self.set_cookie(name, value, domain=None, expires=None, path='/', expires_days=None, **kwargs)[source]]'')
+        cookie = self.get_cookie('test_cookie')
+        print(cookie)
+        self.set_cookie('test_cookie', 'test-gogo')
         arguments = self.normalized_arguments
         try:
             user_ids = list(map(int, arguments['userIds']))

@@ -160,6 +160,7 @@
                             'data': req,
                             'dataType': 'json',
                             'contentType': 'application/json',
+                            'xhrFields': {'withCredentials': true},
                             'success': function (res, status, xhr){
                                 users.length = 0;
                                 $.each(res, function(ii, user){
