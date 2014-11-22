@@ -41,7 +41,6 @@
                     'name': '',
                     'email': ''
                 },
-                'new_user_creating': true,
                 'new_user': {
                     'name': '',
                     'email': '',
@@ -55,18 +54,10 @@
                 created: function (){
                     this.$watch('current_user_id', this.fetch_current_user);
                     this.$watch('users', this.fetch_current_user, deep=true);
-                    this.$watch('new_user_creating', this.toggle_user_creating_lock);
                     this.init_new_user_entry();
                     this.fetch_users();
-                    this.toggle_user_creating_lock('.lock-user-update');
                 },
                 methods: {
-                    toggle_user_creating_lock: function (selector){
-                        console.log(selector);
-                        console.log($(selector));
-                        console.log(this.new_user_creating);
-                        $(selector).prop('disabled', this.new_user_creating);
-                    },
                     view_default: function (update){
                         this.mode = '';
                         if(update){
@@ -136,18 +127,15 @@
                         });
                     },
                     register_user: function (continiouse){
-
                         var user = this.new_user;
                         var redirct = continiouse ? this.view_new : this.view_default;
                         var init_new_user_entry = this.init_new_user_entry;
-                        this.new_user_creating = true;
                         $.ajax({
                             'url': '/api/users/new',
                             'type': 'POST',
                             'data': user,
                             'complete': function (){
                                 init_new_user_entry();
-                                // this.new_user_creating = false;
                             },
                             'success': function (res, status, xhr){
                                 notification('success', 'ユーザを作成しました', '');
@@ -166,16 +154,12 @@
                         var users = this.users;
                         var req = {userIds: userIds};
                         var id_user = {};
-                        this.new_user_creating = true;
                         $.ajax({
                             'url': '/api/users',
                             'type': 'GET',
                             'data': req,
                             'dataType': 'json',
                             'contentType': 'application/json',
-                            'complete': function (){
-                                // this.new_user_creating = false;
-                            },
                             'success': function (res, status, xhr){
                                 users.length = 0;
                                 $.each(res, function(ii, user){
