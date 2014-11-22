@@ -44,7 +44,7 @@ class CreateHandler(UserHandler):
 
 
 class CollectionHandler(UserHandler):
-    @view_config(schema='schemas/user.get.request.json')
+    @view_config(schema='schemas/user.get.request.json', auth=True)
     def get(self):
         # self.set_cookie(name, value, domain=None, expires=None, path='/', expires_days=None, **kwargs)[source]]'')
         cookie = self.get_cookie('test_cookie')
@@ -145,7 +145,8 @@ class DeleteHandler(UserHandler):
 
 
 class LoginHandler(UserHandler):
-    @view_config(schema='schemas/login.request.json')
+
+    @view_config(schema='schemas/login.request.json', auth=False)
     def post(self):
         arguments = self.normalized_arguments
         manager = UserManager()
