@@ -107,6 +107,9 @@
                             },
                             'error': function (res, status, xhr){
                                 notification('error', 'ユーザを削除できませんでした', res.statusText);
+                                if(res.status == 401){
+                                    exports.location = "auth";
+                                }
                             }
                         });
                     },
@@ -123,6 +126,9 @@
                             },
                             'error': function (res, status, xhr){
                                 notification('error', 'ユーザ情報を更新できませんでした', res.statusText);
+                                if(res.status == 401){
+                                    exports.location = "auth";
+                                }
                             }
                         });
                     },
@@ -143,6 +149,10 @@
                             },
                             'error': function (res, status, xhr){
                                 notification('error', 'ユーザを作成できませんでした', res.statusText);
+                                if(res.status == 401){
+                                    exports.location = "auth";
+                                }
+
                             }
                         });
 
@@ -169,6 +179,9 @@
                             },
                             'error': function (res, status, xhr){
                                 notification('error', 'ユーザを取得できませんでした', res.statusText);
+                                if(res.status == 401){
+                                    exports.location = "auth";
+                                }
                             }
                         });
                     }
