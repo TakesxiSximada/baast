@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 from sandstorm.handlers import SandstormHandler
-from pyramid.httpexceptions import HTTPBadRequest
+from pyramid.httpexceptions import (
+    HTTPBadRequest,
+    HTTPUnauthorized,
+    )
 from .managers import UserManager
 from .errors import AlreadyExistsUserError
 from .middlewares import view_config
@@ -111,7 +114,6 @@ class UpdateHandler(UserHandler):
 
 
 class DeleteHandler(UserHandler):
-
     @view_config(schema='schemas/user.delete.request.json')
     def post(self):
         print(self.request.arguments)
@@ -140,3 +142,15 @@ class DeleteHandler(UserHandler):
 
         res = [_build_res_entry(user_id) for user_id in user_ids]
         self.write(json.dumps(res))
+
+
+class LoginHandler(UserHandler):
+    @view_config(schema='schemas/login.request.json')
+    def post(self):
+        arguments = self.normalized_arguments
+        manager = UserManager()
+        user = manager.get_from_email_and_password(email=arguments['email'], password=arguments['password'])
+        if user:
+            self.set_secure_cookie('user_id', str(user.id))
+        else:
+            raise HTTPUnauthorized()

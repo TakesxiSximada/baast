@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy import or_
+from sqlalchemy.orm.exc import (
+    NoResultFound,
+    MultipleResultsFound,
+    )
 from .models import (
     User,
     UserAttribute,
@@ -79,3 +83,14 @@ class UserManager(object):
         for user in users:
             user.delete()
         return users
+
+    def get_from_email_and_password(self, email, password):
+        try:
+            return User\
+                .query()\
+                .join(UserAttribute)\
+                .filter(UserAttribute.email == email)\
+                .filter(UserAttribute.password == password)\
+                .one()
+        except (NoResultFound, MultipleResultsFound):
+            return None

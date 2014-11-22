@@ -6,6 +6,7 @@ from .handlers import (
     CreateHandler,
     UpdateHandler,
     DeleteHandler,
+    LoginHandler,
     )
 
 
@@ -15,3 +16,4 @@ def includeme(config):
     config.add_route('/new', CreateHandler, None)
     config.add_route('/update', UpdateHandler, None)
     config.add_route('/delete', DeleteHandler, None)
+    config.add_route('/login', LoginHandler, None)
