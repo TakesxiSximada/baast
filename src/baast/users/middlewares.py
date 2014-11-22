@@ -11,6 +11,7 @@ from sandstorm.middlewares.responses import PyramidHTTPExceptionMiddleware
 
 from .managers import UserManager
 
+
 class AuthenticationMiddleware(Middleware):
     keywords = {
         'auth': False,
@@ -31,7 +32,6 @@ class AuthenticationMiddleware(Middleware):
             else:
                 user = users[0]
                 handler.get_current_user = lambda *args, **kwds: user
-
 
 
 view_config = ViewConfig(
