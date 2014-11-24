@@ -84,13 +84,14 @@ class UserManager(object):
             user.delete()
         return users
 
-    def get_from_email_and_password(self, email, password):
+    def get_from_email_and_password(self, email, password, masked=False):
+        masked_password = password if masked else password
         try:
             return User\
                 .query()\
                 .join(UserAttribute)\
                 .filter(UserAttribute.email == email)\
-                .filter(UserAttribute.password == password)\
+                .filter(UserAttribute.password == masked_password)\
                 .one()
         except (NoResultFound, MultipleResultsFound):
             return None
