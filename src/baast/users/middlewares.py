@@ -2,9 +2,8 @@
 from pyramid.httpexceptions import (
     HTTPUnauthorized,
     )
-
-from sandstorm.middlewares.core import ViewConfig
-from sandstorm.middlewares.validators import (
+from sandstorm.middlewares.core import (
+    ViewConfig,
     TeadownOptionalMiddleware,
     )
 from sandstorm.middlewares.validators import ValidationMiddleware
