@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy import or_
-from .models import (
-    User,
-    UserAttribute,
-    )
 from .errors import AlreadyExistsUserError
 
 
