@@ -4,10 +4,10 @@ from sqlalchemy.orm.exc import (
     NoResultFound,
     MultipleResultsFound,
     )
-from .models import (
-    User,
-    UserAttribute,
-    )
+# from .models import (
+#     User,
+#     UserAttribute,
+#     )
 from .errors import AlreadyExistsUserError
 
 
